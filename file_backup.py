@@ -24,18 +24,21 @@ def walk(path_start):
 def confirm_paths(orig_path, new_path):
     print("Your old path is {}".format(orig_path))
     print("Your new path is {}".format(new_path))
-    ask = input("Are these paths correct? (yes/no)")
+    ask = input("Are these paths correct? (yes/no)\n")
     if ask.lower() == 'yes':
         create_dirs(dirs, orig_path, new_path)
         copy_files(files, orig_path, new_path)
         
 def copy_files(files, orig_path, new_path):
-    ask = input("This function will move {} files. Do you wish to continue? (yes/showfiles)".format(len(files)))
+    ask = input("This function will move {} files. Do you wish to continue? (yes/showfiles)\n".format(len(files)))
     if ask.lower() == 'yes':
         for file in sorted(files):
             f = file.replace(orig_path, new_path)
-            dest = shutil.copy(file, f)
-            print("File successfully copied to: ", dest)
+            try:
+                dest = shutil.copy(file, f)
+                print("File successfully copied to: ", dest)
+            except Exception as e:
+                print(e)
             file_from.append(file)
             file_to.append(f)
     elif ask.lower() == 'showfiles':
@@ -43,12 +46,15 @@ def copy_files(files, orig_path, new_path):
     return file_from, file_to
 
 def create_dirs(dirs, orig_path, new_path):
-    ask = input("This function will create {} new directories. Do you wish to continue?".format(len(dirs)))
+    ask = input("This function will create {} new directories. Do you wish to continue? (yes/no)\n".format(len(dirs)))
     if ask.lower() == 'yes':
         for d in sorted(dirs):
             d = d.replace(orig_path, new_path)
             print("Creating the folder: {}".format(d))
-            os.mkdir(d)
+            try:
+                os.mkdir(d)
+            except Exception as e:
+                print(e)
 
 
 walk_result = walk(orig_path)
