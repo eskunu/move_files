@@ -1,12 +1,11 @@
-# This is a fil backup tool
+# This is a file backup tool
+
 import os
 import time
 import shutil
 
 orig_path = 'C:\\Users\\eskun\\OneDrive\\Projects\\python\\'
 new_path = 'D:\\python\\'
-file_from = []
-file_to = []
 
 def walk(path_start):
     os_walk = os.walk(path_start)
@@ -39,11 +38,8 @@ def copy_files(files, orig_path, new_path):
                 print("File successfully copied to: ", dest)
             except Exception as e:
                 print(e)
-            file_from.append(file)
-            file_to.append(f)
     elif ask.lower() == 'showfiles':
         print(files)
-    return file_from, file_to
 
 def create_dirs(dirs, orig_path, new_path):
     ask = input("This function will create {} new directories. Do you wish to continue? (yes/no)\n".format(len(dirs)))
